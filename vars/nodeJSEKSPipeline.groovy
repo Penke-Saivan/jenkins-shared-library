@@ -172,12 +172,12 @@ def call(Map configMap) {
                 steps {
                         script {
                         build job: '../catalogue-deploy'
-                         wait: false //It does not need to wait for the completion of VPC
+                        wait: false //It does not need to wait for the completion of VPC
                         propagate: false // when thereis failure in d/s it should not affect u/s
                         parameters: [
                           string(name: 'appVersion', value: "${appVersion}"),
-                          choices(name: 'ENABLE_FEATURE', value: "dev")
-                          // Other parameter types like text, credentials, file can also be used
+                          choices(name: 'DEPLOY_TO', value: 'dev')
+                      // Other parameter types like text, credentials, file can also be used
                       ]
                         }
                 }
