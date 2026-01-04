@@ -15,8 +15,8 @@ def call(Map configMap) {
             COURSE = 'Jenkins'
             appVersion = ''
             ACC_ID = '131676642204'
-            PROJECT = 'roboshop'
-            COMPONENT = 'catalogue'
+            PROJECT = configMap.get('project')
+            COMPONENT = configMap.get('component')
         }
         //  after the timeout abort the pipeline
         options {
@@ -168,7 +168,20 @@ def call(Map configMap) {
                     }
                 }
             }
-
+            stage('Trigger- Dev-Deploy') {
+                steps {
+                        script {
+                        build job: '../catalogue-deploy'
+                         wait: false //It does not need to wait for the completion of VPC
+                        propagate: false // when thereis failure in d/s it should not affect u/s
+                        parameters: [
+                          string(name: 'appVersion', value: "${appVersion}"),
+                          choices(name: 'ENABLE_FEATURE', value: "dev")
+                          // Other parameter types like text, credentials, file can also be used
+                      ]
+                        }
+                }
+            }
             // stage('Trivy Scan ') {
             //     steps {
             //         script {
