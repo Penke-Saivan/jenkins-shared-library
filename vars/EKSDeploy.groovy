@@ -52,6 +52,19 @@ def call(Map configMap) {
                     }
                 }
                 }
+
+                stage("Functional-Tests-TOBEADDED"){
+                    when{
+                        expression { DEPLOY_TO == "dev"}
+                    }
+                    steps{
+                        script{
+                            sh """
+                                echo "FUNCTIONAL-TESTING in DEV-ENVIRONMENT"
+                                """
+                        }
+                    }
+                }
         }
 
         // --------------------------post build--------------------
