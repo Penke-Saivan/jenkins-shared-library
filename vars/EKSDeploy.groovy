@@ -44,7 +44,7 @@ def call(Map configMap) {
                         kubectl get nodes
                         ls -l
                         echo ${DEPLOY_TO}-${appVersion}
-                        sed -i "s/IMAGE_VERSION/${appVersion}" values.yaml
+                        sed -i "s/IMAGE_VERSION/${appVersion}/" values.yaml
                         helm upgrade --install ${COMPONENT} -f values-${DEPLOY_TO}.yaml -n ${PROJECT} --atomic --wait --timeout=5m .
 
                        """
