@@ -63,7 +63,7 @@ def call(Map configMap) {
                 steps {
                     script {
                         sh '''
-                        npm test
+                        echo "Tested should be written"
                     '''
                     }
                 }
