@@ -164,7 +164,7 @@ def call(Map configMap) {
             stage('Trigger- Dev-Deploy') {
                 steps {
                         script {
-                        build job: '../catalogue-deploy',
+                        build job: "../${COMPONENT}-deploy",
                         wait: false, //It does not need to wait for the completion of VPC
                         propagate: false, // when thereis failure in d/s it should not affect u/s
                         parameters: [
