@@ -38,13 +38,6 @@ def call(Map configMap) {
                 }
             }
             stage('Read-Version') {
-            // input {
-            //     message "Should we continue?"
-            //     ok "Yes, we should."
-            //     submitter "alice,bob"
-            //     parameters {
-            //         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-            //     }}
 
                 steps {
                     script {
@@ -176,7 +169,7 @@ def call(Map configMap) {
                         propagate: false // when thereis failure in d/s it should not affect u/s
                         parameters: [
                           string(name: 'appVersion', value: "${appVersion}"),
-                          choices(name: 'DEPLOY_TO', value: 'dev')
+                          string(name: 'DEPLOY_TO', value: 'dev')
                       // Other parameter types like text, credentials, file can also be used
                       ]
                         }
