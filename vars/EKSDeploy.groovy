@@ -46,7 +46,8 @@ def call(Map configMap) {
                         echo ${DEPLOY_TO}-${appVersion}
                         sed -i "s/IMAGE_VERSION/${appVersion}/" values.yaml
                         helm upgrade --install ${COMPONENT} -f values-${DEPLOY_TO}.yaml -n ${PROJECT} --atomic --wait --timeout=5m .
-
+                        #kubectl apply -f ${COMPONENT}-${DEPLOY_TO}.yaml 
+                        #refer the catlogue-deploy (above command is for argocd helm application)
                        """
                         }
                     }
