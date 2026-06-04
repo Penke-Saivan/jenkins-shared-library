@@ -37,6 +37,7 @@ def call(Map configMap) {
                         withAWS(region: 'us-east-1', credentials: 'aws-creds') {
                             sh """
                         set -e     
+                        #to fail pipeline automatically
                         ls -l
                         pwd
 
@@ -53,7 +54,13 @@ def call(Map configMap) {
                     }
                 }
                 }
+// values.yaml-helm
 
+// deployment:
+//   imageRepo: 131676642204.dkr.ecr.us-east-1.amazonaws.com/roboshop/catalogue # tonyduck/catalogue
+//   imageVersion: IMAGE_VERSION #this version is substiuted by sed editor in the run time
+// service:
+//   servicePort: 8080 # default value
                 stage("Functional-Tests-TOBEADDED"){
                     when{
                         expression { DEPLOY_TO == "dev"}

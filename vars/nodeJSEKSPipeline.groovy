@@ -2,14 +2,33 @@
 def call(Map configMap) {
     pipeline {
     // ------------pre-build-----------------
+agent{
+    kubernetes{
+        yaml '''
 
+        '''
+    }
+}
         // agent configured
         agent {
             node {
                 label 'AGENT-1'
             }
         }
-
+    agent {
+        docker {
+            image 'node:18'
+        }
+    }
+       agent {
+        docker {
+            image 'my-app-image:latest'
+            args '-u root'
+        }
+    }
+     agent {
+        dockerfile true
+    }
         // environment variables
         environment {
             COURSE = 'Jenkins'
@@ -32,13 +51,14 @@ def call(Map configMap) {
                         sh """
                         echo "Building----------A-Read-Version"
                         echo "COurse we learn is : $COURSE"
+                        
 
                        """
                     }
                 }
             }
             stage('Read-Version') {
-
+// Pipeline Utiity STeps plugin
                 steps {
                     script {
                         def packageJSON = readJSON file: 'package.json'
@@ -68,6 +88,9 @@ def call(Map configMap) {
                     }
                 }
             }
+
+// Sonarqube scanner plugin
+
         //Here you need to select scanner tool and send the analysis to server
         // stage('Sonar Scan') {
         //     environment {
@@ -144,6 +167,9 @@ def call(Map configMap) {
 
             // Build images
             stage('Build Images') {
+
+            //    sudo usermod -aG docker ec2-user (Add User to DOcker group) 
+            // AWS STeps Plugin 
                 steps {
                     script {
                         withAWS(region:'us-east-1', credentials:'aws-creds') {
